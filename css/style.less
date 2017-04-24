@@ -1,0 +1,77 @@
+// out: ../css/style.min.css, sourcemap: true, compress: true
+
+body {
+  background-color: #EEE;
+}
+
+#game {
+  display: block;
+  background-image: url('../images/fond-route.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: repeat-y;
+  width: 600px;
+  height: 800px;
+  margin: 0 auto;
+  position: relative;
+
+  #decors {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/decors.png');
+    background-position: center 0;
+    background-repeat: repeat-y;
+  }
+
+  #route {
+    background-color: rgba(0,0,0, 0.4);
+    width: 300px;
+    height: 100%;
+    margin: 0 auto;
+    top: 0;
+    right: 0;
+    left: 0;
+    position: absolute;
+  }
+
+  #car {
+    background : blue;
+    width : 70px;
+    height : 130px;
+    position : absolute;
+    bottom: 30px;
+    left : 10px;
+  }
+}
+
+
+
+#jeu{
+  width: 400px;
+  height: 400px;
+  border: 2px black solid;
+  overflow: hidden;
+  position: relative;
+}
+
+
+
+
+.fond{
+  margin-bottom:-5px;
+  z-index: 10;
+  position: relative;
+}
+#vr{
+  z-index: 100;
+  position: absolute;
+  top: 230px;
+  left: 60px;
+}
+#vj{
+  z-index: 80;
+  position: absolute;
+  top: -200px;
+  left: 0px;
+}
