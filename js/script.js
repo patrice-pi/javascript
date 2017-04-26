@@ -1,43 +1,31 @@
-
 var color = [
-  "#5A0000", // rouge
-  "#9B0000",
-  "#CD0404",
-  "#F30C0C",
-  "#FF4040",
-  "#040C8F", // bleu
-  "#0035C1",
-  "#0046FF",
-  "#008BFF",
-  "#37BCFF",
-  "#077A00", // vert
-  "#09A100",
-  "#0BCD00",
-  "#4FEC00",
-  "#8BFA53",
-  "#B9005A", // rose
-  "#E0006D",
-  "#FF1285",
-  "#FE71C2",
-  "#FF8FC5"
+  "#CF000F", "#F22613", "#DC3023", // rouge
+  "#BFBFBF", "#ECF0F1", "#ABB7B7", // gris
+  "#8E44AD", "#9B59B6", "#763568", // violet
+  "#26C281", "#4DAF7C", "#87D37C", // vert
+  "#22A7F0", "#1F4788", "#4B77BE", // bleu
+  "#F62459", "#C93756", "#F47983", // rose
+  "#F7CA18", "#FFB61E", "#FFA400", // jaune
+  "#6C7A89", "#BFBFBF", "#95A5A6", // gris 2
+  "#003171", "#89C4F4", "#044F67", // bleu 2
+  "#8F1D21", "#9D2933", "#C91F37", // rouge 2
 ];
 
 
-
-header = document.createElement("header");
-header.id = "entete";
-header.innerHTML = "<h1>Color picker !</h1>";
-document.body.appendChild(header);
-
+header = document.createElement("header"); // On créer un élément avec la balise header et on le stock dans la variable header
+header.id = "entete"; // on ajoute l'id entete au header
+header.innerHTML = "<h1>Color picker !</h1>"; // On ajouter du html a l'intérieur : une balise h1
+document.body.appendChild(header); // on défini header comme enfant de body
 
 
-popup = document.createElement("div");
-popup.id = "popup_copied";
-popup.innerHTML = "<h2>Copied !</h2>";
-document.body.appendChild(popup);
+
+popup = document.createElement("div"); // On créer un élément avec la balise div et on le stock dans la variable popup
+popup.id = "popup_copied"; // on ajoute l'id popup_copied au popup
+popup.innerHTML = "<h2>Copy Success !</h2>"; // On ajouter du html a l'intérieur : une balise h2
+document.body.appendChild(popup); // on défini popup comme enfant de body
 
 
-//Function to convert hex format to a rgb color
+// Fonction pour convertir les résultats de couleur RGB en HEXA
 function rgb2hex(orig){
  var rgb = orig.replace(/\s/g,'').match(/^rgba?\((\d+),(\d+),(\d+)/i);
  return (rgb && rgb.length === 4) ? "#" +
@@ -47,19 +35,21 @@ function rgb2hex(orig){
 }
 
 
+// Fonction qui fait disparaitre l'élément en parametre
 function fade(element) {
     var op = 1;  // initial opacity
     var timer = setInterval(function () {
-        if (op <= 0.1){
+        if (op <= 0.001){
             clearInterval(timer);
             element.style.display = 'none';
         }
         element.style.opacity = op;
         element.style.filter = 'alpha(opacity=' + op * 100 + ")";
         op -= op * 0.1;
-    }, 100);
+    }, 20);
 }
 
+// Fonction qui copy la couleur au click
 function copy_couleur(){
   console.log(rgb2hex(window.getComputedStyle(this).backgroundColor));
   var btn = document.getElementsByClassName('couleur');
@@ -75,38 +65,45 @@ function copy_couleur(){
   popup.style.opacity = 1;
   popup.style.backgroundColor = rgb2hex(window.getComputedStyle(this).backgroundColor);
 
-  fade(popup);
+  var delayMillis = 200; //1 second
+
+  setTimeout(function() {
+    fade(popup);
+  }, delayMillis);
+
+
+
+  document.getElementById('entete').style.backgroundColor = rgb2hex(window.getComputedStyle(this).backgroundColor);
 }
 
+var ul = document.createElement('ul'); // On créer un élément de type liste ul
+ul.id = "liste_couleur"; // On lui attribut un id
+document.querySelector('body').appendChild(ul); // On l'affiche dans le body
 
+// On boucle autant de fois qu'on a de couleur dans le tableau color
+for(var i = 0; i < color.length; i++){
 
-
-
-// On créer une liste ul
-var ul = document.createElement('ul');
-// On lui attribut un id
-ul.id = "liste_couleur";
-// On l'affiche dans le body
-document.querySelector('body').appendChild(ul);
-
-// On boucle 5 fois
-for(var i = 0; i < 20;i++){
-  // la création du li
-  var li = document.createElement('li');
-  li.classList.add("couleur"); // on ajoute la class couleur
+  var li = document.createElement('li'); // la création du li
+  li.classList.add("couleur"); // on ajoute la class couleur au li
   li.style.backgroundColor = color[i]; // pour chaque couleur du tableau red_color[0] = i[0]
 
-  li.setAttribute("data-clipboard-text", color[i])
+  li.setAttribute("data-clipboard-text", color[i]) // pour chaque couleur, on rajoute un attribut data-clipboard-text avec la couleur en parametre
 
-  // on ajoute le contenu dans le li
-  li.innerHTML = color[i];
+  li.innerHTML = "<span class='text-color'>"+color[i]+"</span>"; // on ajoute la couleur correspondante au li dans un span
 
-  // on l'intègre dans le ul avec id liste_couleur_red
-  document.getElementById('liste_couleur').appendChild(li);
+  var favori = document.createElement('i');
+  favori.classList.add("fa");
+  favori.classList.add("fa-heart");
+  favori.classList.add("favori_color_"+(i+1));
 
+  document.getElementById('liste_couleur').appendChild(li); // on l'intègre dans le ul avec id liste_couleur
 
-  li.onclick = copy_couleur;
+  li.appendChild(favori);
+
+  li.onclick = copy_couleur; // au click sur un li, on execute la fonction copy_couleur
 }
+
+
 
 // on initialise une div clear à la fin de liste_couleur_red
 var clear = document.createElement('div');
