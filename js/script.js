@@ -48,13 +48,14 @@ function fade(element) {
         op -= op * 0.1;
     }, 20);
 }
-
+lol="";
 // Fonction qui copy la couleur au click
 function copy_couleur(){
   console.log(rgb2hex(window.getComputedStyle(this).backgroundColor));
   var btn = document.getElementsByClassName('couleur');
   var clipboard = new Clipboard(btn);
-
+  lol = rgb2hex(window.getComputedStyle(this).backgroundColor);
+  add_favori(this,lol);
   clipboard.on('success', function(e) {
   });
 
@@ -71,10 +72,19 @@ function copy_couleur(){
     fade(popup);
   }, delayMillis);
 
-
-
   document.getElementById('entete').style.backgroundColor = rgb2hex(window.getComputedStyle(this).backgroundColor);
 }
+
+function add_favori(tile,fav){
+
+
+  tab.push(fav);
+  console.log(tab);
+}
+
+var tab = new Array();
+
+
 
 var ul = document.createElement('ul'); // On créer un élément de type liste ul
 ul.id = "liste_couleur"; // On lui attribut un id
@@ -101,6 +111,11 @@ for(var i = 0; i < color.length; i++){
   li.appendChild(favori);
 
   li.onclick = copy_couleur; // au click sur un li, on execute la fonction copy_couleur
+
+  favori.onclick = function(){
+    add_favori;
+    this.style.opacity = "1";
+  }
 }
 
 
