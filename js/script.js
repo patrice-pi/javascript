@@ -48,8 +48,6 @@ function connect(){
 
 // Si un utilisateur est présent en localstorage, on masque la popup connect
 if (localStorage.getItem("pseudo") === null) {
-
-
   form.style.display = "block";
   masque.style.display = "block";
 } else { // sinon on affiche la popup
@@ -57,6 +55,20 @@ if (localStorage.getItem("pseudo") === null) {
   fade(masque);
   menu.style.display = "block";
   user.innerHTML = "Hello " + localStorage.getItem("pseudo")+ " !";
+
+  if (localStorage.getItem("pseudo") === "rouge") {
+    var color = [
+      "#CF000F", "#F22613", "#DC3023", // rouge
+      "#8F1D21", "#9D2933", "#C91F37" // rouge 2
+    ];
+  } else if (localStorage.getItem("pseudo") === "bleu") {
+    var color = [
+      "#22A7F0", "#1F4788", "#4B77BE", // bleu
+      "#003171", "#89C4F4", "#044F67" // bleu 2
+    ];
+  }
+
+  
 }
 
 
@@ -151,18 +163,20 @@ for(var i = 0; i < color.length; i++){
 
   li.innerHTML = "<span class='text-color'>"+color[i]+"</span>"; // on ajoute la couleur correspondante au li dans un span
 
+  document.getElementById('liste_couleur').appendChild(li); // on l'intègre dans le ul avec id liste_couleur
+  li.onclick = copy_couleur; // au click sur un li, on execute la fonction copy_couleur
+
+
+
   var favori = document.createElement('i');
   favori.classList.add("fa");
   favori.classList.add("fa-heart");
   favori.classList.add("favori_color_"+(i+1));
-
-  document.getElementById('liste_couleur').appendChild(li); // on l'intègre dans le ul avec id liste_couleur
-
   li.appendChild(favori);
 
-  li.onclick = copy_couleur; // au click sur un li, on execute la fonction copy_couleur
 
-  favori.onclick = function(){
+  favori.onclick = function(evt){
+    evt.preventDefault();
     add_favori;
     this.style.opacity = "1";
   }
