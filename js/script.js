@@ -10,8 +10,55 @@ var color = [
   "#003171", "#89C4F4", "#044F67", // bleu 2
   "#8F1D21", "#9D2933", "#C91F37", // rouge 2
   "#000000", "#3C3C3C", "#9E9E9E", // sombre
-  "#B3B3B3", "#C9C9C9", "#FDFDFD", // rouge 2
+  "#B3B3B3", "#C9C9C9", "#FDFDFD"  // clair
 ];
+
+
+var button = document.getElementById("submit");
+var form = document.getElementById("popup_connect");
+var masque = document.getElementById("masque");
+var user = document.getElementById("user");
+var deconnect = document.getElementById("deconnect");
+var menu = document.getElementById("menu");
+
+
+deconnect.onclick = function(){
+  localStorage.removeItem("pseudo");
+  form.style.display = "block";
+  masque.style.display = "block";
+  form.style.opacity = "1";
+  masque.style.opacity = "1";
+  fade(menu);
+}
+
+
+form.onsubmit = connect;
+button.onclick = connect;
+
+
+function connect(){
+  localStorage.setItem('pseudo', form.elements["name"].value);
+  fade(form);
+  fade(masque);
+  user.innerHTML = localStorage.getItem("pseudo");
+  menu.style.display = "block";
+  menu.style.opacity = "1";
+}
+
+
+// Si un utilisateur est présent en localstorage, on masque la popup connect
+if (localStorage.getItem("pseudo") === null) {
+
+
+  form.style.display = "block";
+  masque.style.display = "block";
+} else { // sinon on affiche la popup
+  fade(form);
+  fade(masque);
+  menu.style.display = "block";
+  user.innerHTML = "Hello " + localStorage.getItem("pseudo")+ " !";
+}
+
 
 
 header = document.createElement("header"); // On créer un élément avec la balise header et on le stock dans la variable header
@@ -48,8 +95,9 @@ function fade(element) {
         element.style.opacity = op;
         element.style.filter = 'alpha(opacity=' + op * 100 + ")";
         op -= op * 0.1;
-    }, 20);
+    }, 10);
 }
+
 
 
 tab_favori = "";
@@ -71,7 +119,7 @@ function copy_couleur(){
   popup.style.opacity = 1;
   popup.style.backgroundColor = rgb2hex(window.getComputedStyle(this).backgroundColor);
 
-  var delayMillis = 200; //1 second
+  var delayMillis = 300; //1 second
 
   setTimeout(function() {
     fade(popup);
@@ -82,11 +130,10 @@ function copy_couleur(){
 
 function add_favori(tile,fav){
   tab.push(fav);
-  console.log(tab);
+  // console.log(tab);
 }
 
 var tab = new Array();
-
 
 
 var ul = document.createElement('ul'); // On créer un élément de type liste ul
@@ -98,9 +145,9 @@ for(var i = 0; i < color.length; i++){
 
   var li = document.createElement('li'); // la création du li
   li.classList.add("couleur"); // on ajoute la class couleur au li
-  li.style.backgroundColor = color[i]; // pour chaque couleur du tableau red_color[0] = i[0]
+  li.style.backgroundColor = color[i]; // pour chaque couleur du tableau color[0] = i[0]
 
-  li.setAttribute("data-clipboard-text", color[i]) // pour chaque couleur, on rajoute un attribut data-clipboard-text avec la couleur en parametre
+  li.setAttribute("data-clipboard-text", color[i]); // pour chaque couleur, on rajoute un attribut data-clipboard-text avec la couleur en parametre
 
   li.innerHTML = "<span class='text-color'>"+color[i]+"</span>"; // on ajoute la couleur correspondante au li dans un span
 
