@@ -14,6 +14,28 @@ var color = [
 ];
 
 
+
+function loadJSON(callback) {
+    var xobj = new XMLHttpRequest();
+       xobj.overrideMimeType("application/json");
+   xobj.open('GET', 'data.json', true);
+   xobj.onreadystatechange = function () {
+         if (xobj.readyState == 4 && xobj.status == "200") {
+           callback(xobj.responseText);
+         }
+   };
+   xobj.send(null);
+  }
+  loadJSON(function(response) {
+     couleur = JSON.parse(response);
+     console.log(couleur['couleur']);
+  });
+
+
+
+
+
+
 var button = document.getElementById("submit");
 var form = document.getElementById("popup_connect");
 var masque = document.getElementById("masque");
@@ -48,8 +70,6 @@ function connect(){
 
 // Si un utilisateur est présent en localstorage, on masque la popup connect
 if (localStorage.getItem("pseudo") === null) {
-
-
   form.style.display = "block";
   masque.style.display = "block";
 } else { // sinon on affiche la popup
@@ -57,6 +77,10 @@ if (localStorage.getItem("pseudo") === null) {
   fade(masque);
   menu.style.display = "block";
   user.innerHTML = "Hello " + localStorage.getItem("pseudo")+ " !";
+
+  if(localStorage.getItem("pseudo") == "patrice"){
+
+  }
 }
 
 
