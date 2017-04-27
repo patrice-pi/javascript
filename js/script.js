@@ -16,24 +16,42 @@ var color = [
 
 
 function loadJSON(callback) {
-    var xobj = new XMLHttpRequest();
-       xobj.overrideMimeType("application/json");
-   xobj.open('GET', 'data.json', true);
-   xobj.onreadystatechange = function () {
-         if (xobj.readyState == 4 && xobj.status == "200") {
-           callback(xobj.responseText);
-         }
-   };
-   xobj.send(null);
-  }
-  loadJSON(function(response) {
-     couleur = JSON.parse(response);
-     console.log(couleur['couleur']);
-  });
+  var xobj = new XMLHttpRequest();
+     xobj.overrideMimeType("application/json");
+ xobj.open('GET', 'data.json', true);
+ xobj.onreadystatechange = function () {
+       if (xobj.readyState == 4 && xobj.status == "200") {
+         callback(xobj.responseText);
+       }
+ };
+ xobj.send(null);
+}
+loadJSON(function(response) {
+   couleur = JSON.parse(response);
 
+   for (var i = 0; i < couleur['couleur'].length; i++) {
+     //console.log(couleur['couleur'][i]);
+   }
 
-
-
+   if(localStorage.getItem("pseudo") == "patrice"){
+     color = couleur['couleur'];
+   } else {
+     color = [
+       "#CF000F", "#F22613", "#DC3023", // rouge
+       "#BFBFBF", "#ECF0F1", "#ABB7B7", // gris
+       "#8E44AD", "#9B59B6", "#763568", // violet
+       "#26C281", "#4DAF7C", "#87D37C", // vert
+       "#22A7F0", "#1F4788", "#4B77BE", // bleu
+       "#F62459", "#C93756", "#F47983", // rose
+       "#F7CA18", "#FFB61E", "#FFA400", // jaune
+       "#6C7A89", "#BFBFBF", "#95A5A6", // gris 2
+       "#003171", "#89C4F4", "#044F67", // bleu 2
+       "#8F1D21", "#9D2933", "#C91F37", // rouge 2
+       "#000000", "#3C3C3C", "#9E9E9E", // sombre
+       "#B3B3B3", "#C9C9C9", "#FDFDFD"  // clair
+     ];
+   }
+});
 
 
 var button = document.getElementById("submit");
@@ -77,10 +95,6 @@ if (localStorage.getItem("pseudo") === null) {
   fade(masque);
   menu.style.display = "block";
   user.innerHTML = "Hello " + localStorage.getItem("pseudo")+ " !";
-
-  if(localStorage.getItem("pseudo") == "patrice"){
-
-  }
 }
 
 
