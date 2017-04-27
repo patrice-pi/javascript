@@ -9,6 +9,7 @@ var color = [
   "#6C7A89", "#BFBFBF", "#95A5A6", // gris 2
   "#003171", "#89C4F4", "#044F67", // bleu 2
   "#8F1D21", "#9D2933", "#C91F37", // rouge 2
+  "#000000", "#3C3C3C", "#9E9E9E", // sombre
 ];
 
 
@@ -48,14 +49,17 @@ function fade(element) {
         op -= op * 0.1;
     }, 20);
 }
-lol="";
+
+
+tab_favori = "";
+
 // Fonction qui copy la couleur au click
 function copy_couleur(){
   console.log(rgb2hex(window.getComputedStyle(this).backgroundColor));
   var btn = document.getElementsByClassName('couleur');
   var clipboard = new Clipboard(btn);
-  lol = rgb2hex(window.getComputedStyle(this).backgroundColor);
-  add_favori(this,lol);
+  tab_favori = rgb2hex(window.getComputedStyle(this).backgroundColor);
+  add_favori(this,tab_favori);
   clipboard.on('success', function(e) {
   });
 
@@ -76,8 +80,6 @@ function copy_couleur(){
 }
 
 function add_favori(tile,fav){
-
-
   tab.push(fav);
   console.log(tab);
 }
@@ -117,8 +119,6 @@ for(var i = 0; i < color.length; i++){
     this.style.opacity = "1";
   }
 }
-
-
 
 // on initialise une div clear à la fin de liste_couleur_red
 var clear = document.createElement('div');
