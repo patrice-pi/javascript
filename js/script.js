@@ -10,6 +10,7 @@ var color = [
   "#003171", "#89C4F4", "#044F67", // bleu 2
   "#8F1D21", "#9D2933", "#C91F37", // rouge 2
   "#000000", "#3C3C3C", "#9E9E9E", // sombre
+  "#B3B3B3", "#C9C9C9", "#FDFDFD", // rouge 2
 ];
 
 
